@@ -105,11 +105,21 @@ public class MyDodo extends Dodo
      */
 
     public void walkToWorldEdgePrintingCoordinates( ){
-        while( ! borderAhead() && ! fenceAhead ){
-            System.out.println       
-            move();
+        while(borderAhead()){
+        
         }
-    }
+    }            
+    public boolean canLayEgg( ){
+        if( onEgg() ){
+            return false;
+        } else {
+            return true;
+        }
+    }  
+}
+
+
+    
 
     /**
      * Test if Dodo can lay an egg.
@@ -123,11 +133,5 @@ public class MyDodo extends Dodo
      *                      (already an egg in the cell)
      */
 
-    public boolean canLayEgg( ){
-        if( onEgg() ){
-            return false;
-        }else{
-            return true;
-        }
-    }  
-}
+    
+
