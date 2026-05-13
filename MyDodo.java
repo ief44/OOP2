@@ -128,6 +128,10 @@ public class MyDodo extends Dodo
     turnLeft();
     }
  }
+  public void turn180(){
+      turnRight();
+      turnRight();
+  }
 }
 
 
