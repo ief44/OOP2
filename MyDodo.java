@@ -115,8 +115,22 @@ public class MyDodo extends Dodo
         } else {
             return true;
         }
-    }  
+    }
+    public void climboverFence(){
+    if (fenceAhead()) {   
+    turnLeft();
+    move();
+    turnRight();
+    move();
+    move();
+    turnRight();
+    move();
+    turnLeft();
+    }
+ }
 }
+
+
 
 
     
