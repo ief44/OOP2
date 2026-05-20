@@ -108,7 +108,6 @@ public class MyDodo extends Dodo
     public void walkToWorldEdgePrintingCoordinates( ){
         while(!borderAhead()){
          
-            System.out.println(getX() + getY());
             move();
         }
     }            
