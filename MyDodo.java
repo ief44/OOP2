@@ -105,9 +105,8 @@ public class MyDodo extends Dodo
      *              Coordinates of each cell printed in the console.
      */
 
-    public void walkToWorldEdgePrintingCoordinates( ){
+    public void walkToWorldEdge(){
         while(!borderAhead()){
-         
             move();
         }
     }            
@@ -152,7 +151,21 @@ public class MyDodo extends Dodo
       while (!onEgg() && !borderAhead())
       move();
     }
+    public void goBackToStartOfRowAndFaceBack(){
+      turn180();
+      walkToWorldEdge();
+      turn180();
+ }
+    public void walkToWorldEdgeClimbingOverFences(){
+        while (!borderAhead() ) {
+        move();
+        if(fenceAhead()) {
+            climboverFence();
+        }
+    }
+ }
 }
+
    
 
 
