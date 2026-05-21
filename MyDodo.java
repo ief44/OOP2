@@ -134,19 +134,11 @@ public class MyDodo extends Dodo
       turnRight();
   }
   public boolean grainAhead(){
-      move();
-      if (onGrain()) {
-      turn180();
-      move();
-      turn180();
-      return true;
-     } else {
-      turn180();
-      move();
-      turn180();
-      return false;
-    }    
-  }
+    move();
+      boolean grainFound = onGrain();
+      stepOneCellBackwards();
+      return grainFound;
+    }
   public void goToEgg(){
       while (!onEgg() && !borderAhead())
       move();
@@ -177,6 +169,11 @@ public class MyDodo extends Dodo
           pickUpGrain();
       }
 }
+ public void stepOneCellBackwards(){
+    turn180();
+    step();
+    turn180();
+    }
 }
 
    
