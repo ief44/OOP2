@@ -149,14 +149,19 @@ public class MyDodo extends Dodo
       turn180();
  }
    public void walkToWorldEdgeClimbingOverFences() {
-      while (!borderAhead()) {
-          if (fenceAhead()) {
-              climboverFence();
-          } else {
-              move();
-          }
- }
+    while (!borderAhead()) {
+        if (onNest()) {
+            layEgg();
+        }
+
+        if (fenceAhead()) {
+            climboverFence();
+        } else {
+            move();
+        }
+    }
 }
+
  public void pickUpGrainsAndPrintCoordinates() { // dodo loop naar vooren en onder weg pakt ie graan op en prinie cordinaten
       while (!borderAhead()) {
           if (onGrain()) {
@@ -186,6 +191,19 @@ public class MyDodo extends Dodo
           layEgg();
       }
   }
+  public void walkAroundFencedArea() {
+    move(); 
+    while (!onEgg()) {
+        if (fenceAhead()) {
+            turnLeft();
+        } else if (!fenceAhead()) {
+            turnRight();
+            move();
+        } else {
+            move();
+        }
+    }
+}
 }
 
    
