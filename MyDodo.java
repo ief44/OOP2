@@ -134,7 +134,7 @@ public class MyDodo extends Dodo
       turnRight();
   }
   public boolean grainAhead(){
-    move();
+      step();
       boolean grainFound = onGrain();
       stepOneCellBackwards();
       return grainFound;
@@ -148,14 +148,15 @@ public class MyDodo extends Dodo
       walkToWorldEdge();
       turn180();
  }
-    public void walkToWorldEdgeClimbingOverFences(){
-        while (!borderAhead() ) {
-        move();
-        if(fenceAhead()) {
-            climboverFence();
-        }
-    }
+   public void walkToWorldEdgeClimbingOverFences() {
+      while (!borderAhead()) {
+          if (fenceAhead()) {
+              climboverFence();
+          } else {
+              move();
+          }
  }
+}
  public void pickUpGrainsAndPrintCoordinates() { // dodo loop naar vooren en onder weg pakt ie graan op en prinie cordinaten
       while (!borderAhead()) {
           if (onGrain()) {
