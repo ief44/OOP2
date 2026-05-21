@@ -175,6 +175,17 @@ public class MyDodo extends Dodo
     step();
     turn180();
     }
+    public void layEggInEmptyNests() {
+      while (!borderAhead()) {
+          if (onNest() && !onEgg()) {
+              layEgg();
+          }
+          move();
+      }
+      if (onNest() && !onEgg()) {
+          layEgg();
+      }
+  }
 }
 
    
