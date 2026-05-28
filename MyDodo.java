@@ -249,6 +249,17 @@ public class MyDodo extends Dodo
           return false;
       }
   }
+  public int countEggsInRow() {   // telt eiren in een rij 
+      int count = 0;
+      if (onEgg()) { count++; }
+      while (!borderAhead()) {
+          move();
+          if (onEgg()) { count++; }
+      }
+      goBackToStartOfRowAndFaceBack();
+      showCompliment("Aantal eieren in rij: " + count);
+      return count;
+  }
 }
 
    
