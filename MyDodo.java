@@ -222,6 +222,23 @@ public class MyDodo extends Dodo
   public boolean locationReached(int x, int y) {
       return getX() == x && getY() == y;
   }  //check of de dodo al op de coordinaten juiste coordinaten staat.
+  public void goToLocation(int coordX, int coordY) {  // vind coordinaten bijv als is te klein is 4.2 stap oost 5.2 of als zuid te klein is 5.2 stap zuid 5.3
+      while (!locationReached(coordX, coordY)) {
+          if (getX() < coordX) {
+              setDirection(EAST);
+              move();
+          } else if (getX() > coordX) {
+              setDirection(WEST);
+              move();
+          } else if (getY() < coordY) {
+              setDirection(SOUTH);
+              move();
+          } else if (getY() > coordY) {
+              setDirection(NORTH);
+              move();
+          }
+      }
+  } 
 }
 
    
