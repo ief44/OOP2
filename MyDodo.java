@@ -239,6 +239,16 @@ public class MyDodo extends Dodo
           }
       }
   } 
+  public boolean validCoordinates(int x, int y) { // check of de gegeven codinaten passen bij de wereld 
+      int width = getWorld().getWidth();
+      int height = getWorld().getHeight();
+      if (x >= 0 && x < width && y >= 0 && y < height) {
+          return true;
+      } else {
+          showError("Invalid coordinates");
+          return false;
+      }
+  }
 }
 
    
