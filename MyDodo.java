@@ -260,8 +260,21 @@ public class MyDodo extends Dodo
       showCompliment("Aantal eieren in rij: " + count);
       return count;
   }
+  public void simpleMaze () {  
+      while (!onNest()) {
+          turnRight();
+          if (canMove()) {
+              move();
+          } else {
+              turnLeft();
+              while (!canMove()) {
+                  turnLeft();
+              }
+              move();
+          }
+      }
 }
-
+}
    
 
 
