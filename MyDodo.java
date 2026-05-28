@@ -214,6 +214,11 @@ public class MyDodo extends Dodo
           }
       }
   }
+  public void faceEast() {
+      while (getDirection() != EAST) {
+          turnRight();
+      }
+  }
 }
 
    
