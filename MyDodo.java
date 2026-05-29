@@ -214,11 +214,14 @@ public class MyDodo extends Dodo
           }
       }
   }
-  public void faceEast() { // hij draait ongeacht op welke positie die zit draait die naar het oosten
-      while (getDirection() != EAST) {
-          turnRight();
-      }
-  }
+  public void face (int direction){
+    while (getDirection() !=direction){
+        turnRight();
+    }
+    }
+    public void faceWest()  { face(WEST);  }
+    public void faceNorth() { face(NORTH); }
+    public void faceSouth() { face(SOUTH); }
   public boolean locationReached(int x, int y) {
       return getX() == x && getY() == y;
   }  //check of de dodo al op de coordinaten juiste coordinaten staat.
