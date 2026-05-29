@@ -218,7 +218,7 @@ public class MyDodo extends Dodo
     while (getDirection() !=direction){
         turnRight();
     }
-    }
+}
     public void faceWest()  { face(WEST);  }
     public void faceNorth() { face(NORTH); }
     public void faceSouth() { face(SOUTH); }
@@ -276,6 +276,7 @@ public class MyDodo extends Dodo
               move();
           }
       }
+      showCompliment("Nest gevonden!");
 }
 public void eggTrailToNest() {
       while (!onNest()) {
