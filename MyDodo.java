@@ -219,9 +219,12 @@ public class MyDodo extends Dodo
         turnRight();
     }
 }
-    public void faceWest()  { face(WEST);  }
-    public void faceNorth() { face(NORTH); }
-    public void faceSouth() { face(SOUTH); }
+    public void faceWest()  
+    { face(WEST);  }
+    public void faceNorth() 
+    { face(NORTH); }
+    public void faceSouth() 
+    { face(SOUTH); }
   public boolean locationReached(int x, int y) {
       return getX() == x && getY() == y;
   }  //check of de dodo al op de coordinaten juiste coordinaten staat.
@@ -290,6 +293,12 @@ public void eggTrailToNest() {
           }
       }
   }
+  public void layTrailOfEggs(int n){
+    for (int i = 0; i < n; i++){
+        move();
+        layEgg();
+    }
+    }
 }
    
 
