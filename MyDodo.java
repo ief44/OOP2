@@ -299,6 +299,23 @@ public void eggTrailToNest() {
         layEgg();
     }
     }
+   public int countEggsInWorld() {
+    int total = 0;
+    int height = getWorld().getHeight();
+    int width = getWorld().getWidth();
+    
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            goToLocation(col, row);
+            if (onEgg()) {
+                total++;
+            }
+        }
+    }
+    
+    System.out.println("Totaal aantal eieren: " + total);
+    return total;
+}
 }
    
 
