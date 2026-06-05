@@ -368,6 +368,32 @@ public void maakMonumentVanEieren() {
 
     goToLocation(startX, startY);
 }
+ /**
+ * Vult de wereld zover mogelijk met een verdubbelend patroon van eieren.
+ * Rij 1 krijgt 1 ei, rij 2 krijgt 2 eieren, rij 3 krijgt 4 eieren, etc.
+ * 
+ * <p> Initial: Dodo staat ergens in de wereld.
+ * <p> Final:   De wereld is gevuld met een verdubbelend patroon van eieren
+ *              vanaf de startpositie van Dodo.
+ */
+public void maakStevigMonument() {
+    int startX = getX();
+    int startY = getY();
+    int aantalRijen = getWorld().getHeight() - startY;
+    int aantalEieren = 1;
+
+    for (int rij = 0; rij < aantalRijen; rij++) {
+        for (int kolom = 0; kolom < aantalEieren; kolom++) {
+            goToLocation(startX + kolom, startY + rij);
+            if (canLayEgg()) {
+                layEgg();
+            }
+        }
+        aantalEieren = aantalEieren * 2; // verdubbel voor de volgende rij
+    }
+
+    goToLocation(startX, startY);
+}
 }
    
 
