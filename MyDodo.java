@@ -293,6 +293,14 @@ public void eggTrailToNest() {
           }
       }
   }
+   public void faceDirection(int direction) {
+        if (direction >= 0 && direction <= 3)
+        {
+        while (getDirection() !=direction){
+            turnRight();
+        }
+    }
+}
   public void layTrailOfEggs(int n){
     for (int i = 0; i < n; i++){
         move();
@@ -316,7 +324,36 @@ public void eggTrailToNest() {
     System.out.println("Totaal aantal eieren: " + total);
     return total;
 }
+ public void searchRowWithMostEggs() {
+    int height = getWorld().getHeight();
+    int row = 0;
+        int bestRow = 0;
+    int bestCount = 0;
+    boolean equalEggCount = false;
+ 
+    while (row < height) {
+        goToLocation(0, row);
+        faceDirection(1);
+        int eggCount = countEggsInRow();
+        row++;
+        if (eggCount > bestCount) {
+            bestCount = eggCount;
+            bestRow = row;
+            equalEggCount = false;
+        } else if (eggCount == bestCount) {
+            equalEggCount = true;
+        }
+    }
+    goToLocation(0, 0);
+    faceDirection(1);
+        if (equalEggCount) {
+        System.out.println("There are multiple rows with " + bestCount + " eggs.");
+    } else {
+        System.out.println("Row with most eggs: " + bestRow + " (" + bestCount + ")");
+    }
 }
+}
+
    
 
 
