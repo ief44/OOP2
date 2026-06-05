@@ -352,8 +352,23 @@ public void eggTrailToNest() {
         System.out.println("Row with most eggs: " + bestRow + " (" + bestCount + ")");
     }
 }
-}
+public void maakMonumentVanEieren() {
+    int startX = getX();
+    int startY = getY();
+    int aantalRijen = getWorld().getHeight() - startY;
 
+    for (int rij = 0; rij < aantalRijen; rij++) {
+        for (int kolom = 0; kolom <= rij; kolom++) {
+            goToLocation(startX + kolom, startY + rij);
+            if (canLayEgg()) {
+                layEgg();
+            }
+        }
+    }
+
+    goToLocation(startX, startY);
+}
+}
    
 
 
