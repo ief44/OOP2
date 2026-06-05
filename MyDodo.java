@@ -263,7 +263,7 @@ public class MyDodo extends Dodo
           if (onEgg()) { count++; }
       }
       goBackToStartOfRowAndFaceBack();
-      showCompliment("Aantal eieren in rij: " + count);
+      System.out.println("Aantal eieren in rij: " + count);
       return count;
   }
   public void simpleMaze () {  
@@ -393,6 +393,39 @@ public void maakStevigMonument() {
     }
 
     goToLocation(startX, startY);
+}
+  public void maakPiramideVanEieren() {
+    int startX = getX();
+    int startY = getY();
+    int aantalRijen = getWorld().getHeight() - startY;
+
+    for (int rij = 0; rij < aantalRijen; rij++) {
+        for (int kolom = -rij; kolom <= rij; kolom++) {
+            goToLocation(startX + kolom, startY + rij);
+            if (canLayEgg()) {
+                layEgg();
+            }
+        }
+    }
+
+    goToLocation(startX, startY);
+ }
+ public double gemiddeldAantalEierenPerRij() {
+    int aantalRijen = getWorld().getHeight();
+    int totaalEieren = 0;
+
+    for (int rij = 0; rij < aantalRijen; rij++) {
+        goToLocation(0, rij);
+        face(EAST);
+        totaalEieren += countEggsInRow();
+    }
+
+    double gemiddelde = (double) totaalEieren / aantalRijen;
+    System.out.println("Gemiddeld aantal eieren per rij: " + gemiddelde);
+
+    goToLocation(0, 0);
+    face(EAST);
+    return gemiddelde;
 }
 }
    
