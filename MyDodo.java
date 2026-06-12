@@ -225,6 +225,9 @@ public class MyDodo extends Dodo
     { face(NORTH); }
     public void faceSouth() 
     { face(SOUTH); }
+    public void faceEast(){
+        face(EAST);
+    }
   public boolean locationReached(int x, int y) {
       return getX() == x && getY() == y;
   }  //check of de dodo al op de coordinaten juiste coordinaten staat.
@@ -427,7 +430,108 @@ public void maakStevigMonument() {
     face(EAST);
     return gemiddelde;
 }
+  public void parityTester() {
+        int worldHeight = getWorld().getHeight();
+        int worldWidth = getWorld().getWidth();
+        int savedx = -1;
+        int savedy = -1;
+        for(int i = 0; i < worldHeight; i++) {
+            goToLocation(0, i);
+            faceEast();
+            if(countEggsInRow() % 2 != 0) {
+                savedy = i;
+                System.out.println(savedy);
+            }
+        }
+        
+        for(int i = 0; i < worldWidth; i++) {
+            goToLocation(i, 0);
+            faceSouth();
+            if(countEggsInRow() % 2 != 0) {
+                savedx = i;
+                System.out.println(savedx);
+            }
+        }
+        
+        if (savedx != -1 && savedy != -1) {
+            goToLocation(savedx, savedy);
+            if(canLayEgg()) {
+                layEgg();
+            }
+        }
+    }
+    
+    public int direction() {
+        int previousX = getX();
+        int previousY = getY();
+        int direction = -1;
+        
+        if(borderAhead()) {
+            stepOneCellBackwards();
+            previousX = getX();
+            previousY = getY();
+            move();
+            if(previousX < getX()) {
+                direction = 1;
+            } else if(previousX > getX()) {
+                direction = 3;
+            } else if(previousY < getY()) {
+                direction = 2;
+            } else if(previousY > getY()){
+                direction = 0;
+            }
+        } else {
+            move();
+            if(previousX < getX()) {
+                direction = 1;
+            } else if(previousX > getX()) {
+                direction = 3;
+            } else if(previousY < getY()) {
+                direction = 2;
+            } else if(previousY > getY()){
+                direction = 0;
+            }
+            stepOneCellBackwards();
+        }
+        return direction;
+    }
+    
+    public void parityTesterWithoutDirection() {
+        int worldHeight = getWorld().getHeight();
+        int worldWidth = getWorld().getWidth();
+        int savedx = -1;
+        int savedy = -1;
+        for(int i = 0; i < worldHeight; i++) {
+            goToLocation(0,i);
+            faceDirection(1);
+            if(countEggsInRow() % 2 != 0) {
+                savedy = i;
+                System.out.println(savedy);
+            }
+        }
+        
+        for(int i = 0; i < worldWidth; i++) {
+            goToLocation(i,0);
+            faceDirection(2);
+            if(countEggsInRow() % 2 != 0) {
+                savedx = i;
+                System.out.println(savedx);
+            }
+        }
+        
+        if (savedx != -1 && savedy != -1) {
+            goToLocation(savedx, savedy);
+            if(canLayEgg()) {
+                layEgg();
+            }
+        }
+    }
 }
+
+ 
+
+
+
    
 
 
