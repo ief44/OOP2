@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.list;
 /**
  *
  * @author Sjaak Smetsers & Renske Smetsers-Weeda
@@ -24,6 +24,7 @@ public class MyDodo extends Dodo
      * <P> Final: If possible, Dodo has moved forward one cell
      *
      */
+    // Laat Dodo één stap vooruit zetten als dat kan, anders foutmelding "I'm stuck!"
     public void move() {
         if ( canMove() ) {
             step();
@@ -43,6 +44,7 @@ public class MyDodo extends Dodo
      *                 false if Dodo can't move
      *                      (an obstruction or end of world ahead)
      */
+    // Checkt of Dodo kan bewegen: false als er een hek of de rand van de wereld voor haar is
     public boolean canMove() {
         if ( borderAhead() || fenceAhead ()){
             return false;
@@ -58,7 +60,8 @@ public class MyDodo extends Dodo
      * 
      * <p> Initial: Dodo is somewhere in the world. There is an egg in Dodo's cell.
      * <p> Final: Dodo is in the same cell. The egg has been removed (hatched).     
-     */    
+     */   
+    // Pakt het ei in de huidige cel op (laat het "uitkomen") en verhoogt de teller; foutmelding als er geen ei ligt
     public void hatchEgg () {
         if ( onEgg() ) {
             pickUpEgg();
@@ -73,6 +76,7 @@ public class MyDodo extends Dodo
      * 
      * @return int number of eggs hatched by Dodo
      */
+    // Geeft het aantal eieren terug dat Dodo tot nu toe heeft laten uitkomen
     public int getNrOfEggsHatched() {
         return myNrOfEggsHatched;
     }
@@ -85,6 +89,7 @@ public class MyDodo extends Dodo
      * 
      * @param   int distance: the number of steps made
      */
+    // Laat Dodo "distance" stappen vooruit lopen, met een teller die elke stap print
     public void jump( int distance ) {
         int nrStepsTaken = 0;               // set counter to 0
         while ( nrStepsTaken < distance ) { // check if more steps must be taken  
@@ -104,12 +109,13 @@ public class MyDodo extends Dodo
      * <p> Final:   Dodo is on East side of world facing East.
      *              Coordinates of each cell printed in the console.
      */
-
+    // Laat Dodo vooruit lopen totdat ze de rand van de wereld bereikt
     public void walkToWorldEdge(){
         while(!borderAhead()){
             move();
         }
-    }            
+    }     
+    // Checkt of Dodo op de huidige cel een ei mag leggen (alleen als er nog geen ei ligt)
     public boolean canLayEgg( ){
         if( onEgg() ){
             return false;
@@ -117,6 +123,7 @@ public class MyDodo extends Dodo
             return true;
         }
     }
+    // Laat Dodo over een hek heen klimmen door er zijwaarts omheen te stappen, als er een hek voor haar staat
     public void climboverFence(){
     if (fenceAhead()) {   
     turnLeft();
@@ -129,25 +136,30 @@ public class MyDodo extends Dodo
     turnLeft();
     }
  }
+ // Draait Dodo 180 graden om, door twee keer naar rechts te draaien
   public void turn180(){
       turnRight();
       turnRight();
   }
+  // Checkt of er graan ligt in de cel direct voor Dodo, zonder dat ze daar blijft staan
   public boolean grainAhead(){
       step();
       boolean grainFound = onGrain();
       stepOneCellBackwards();
       return grainFound;
     }
+    // Laat Dodo vooruit lopen tot ze op een ei staat of de rand van de wereld bereikt
   public void goToEgg(){
       while (!onEgg() && !borderAhead())
       move();
     }
+    // Draait Dodo om, loopt terug naar het begin van de rij en draait weer terug naar de oorspronkelijke richting
     public void goBackToStartOfRowAndFaceBack(){
       turn180();
       walkToWorldEdge();
       turn180();
  }
+ // Loopt door de wereld tot de rand, legt een ei op elk nest en klimt over elk hek heen
    public void walkToWorldEdgeClimbingOverFences() {
     while (!borderAhead()) {
         if (onNest()) {
@@ -161,7 +173,7 @@ public class MyDodo extends Dodo
         }
     }
 }
-
+// Loopt door de rij, pakt al het graan op en print de coordinaten waar dat gebeurt
  public void pickUpGrainsAndPrintCoordinates() { // dodo loop naar vooren en onder weg pakt ie graan op en prinie cordinaten
       while (!borderAhead()) {
           if (onGrain()) {
@@ -175,11 +187,13 @@ public class MyDodo extends Dodo
           pickUpGrain();
       }
 }
+// Laat Dodo één cel naar achteren stappen zonder haar kijkrichting te veranderen
  public void stepOneCellBackwards(){
     turn180();
     step();
     turn180();
     }
+    // Loopt door de rij en legt een ei op elk nest waar nog geen ei ligt
     public void layEggInEmptyNests() {
       while (!borderAhead()) {
           if (onNest() && !onEgg()) {
@@ -191,6 +205,7 @@ public class MyDodo extends Dodo
           layEgg();
       }
   }
+  // Loopt langs de rand van een omsloten gebied (rechterhand-regel) totdat een ei gevonden wordt
   public void walkAroundFencedArea() {
       while (!onEgg()){
       turnRight();
@@ -200,6 +215,7 @@ public class MyDodo extends Dodo
         move();
   }
 }      
+// Alternatieve manier om langs een omsloten gebied te lopen totdat een ei gevonden wordt, werkt ook bij complexere hekvormen
  public void walkAroundOtherFencedArea() {  
       while (!onEgg()) {
           turnRight();
@@ -214,11 +230,13 @@ public class MyDodo extends Dodo
           }
       }
   }
+  // Draait Dodo net zo lang naar rechts totdat ze in de opgegeven richting kijkt
   public void face (int direction){
     while (getDirection() !=direction){
         turnRight();
     }
 }
+// Draait Dodo zodat ze naar het westen, noorden, zuiden of oosten kijkt
     public void faceWest()  
     { face(WEST);  }
     public void faceNorth() 
@@ -228,6 +246,7 @@ public class MyDodo extends Dodo
     public void faceEast(){
         face(EAST);
     }
+    // Checkt of Dodo precies op de opgegeven coordinaten staat
   public boolean locationReached(int x, int y) {
       return getX() == x && getY() == y;
   }  //check of de dodo al op de coordinaten juiste coordinaten staat.
@@ -248,6 +267,7 @@ public class MyDodo extends Dodo
           }
       }
   } 
+  
   public boolean validCoordinates(int x, int y) { // check of de gegeven codinaten passen bij de wereld 
       int width = getWorld().getWidth();
       int height = getWorld().getHeight();
@@ -269,6 +289,7 @@ public class MyDodo extends Dodo
       System.out.println("Aantal eieren in rij: " + count);
       return count;
   }
+  // Navigeert door een doolhof van hekken (rechterhand-regel) totdat een nest gevonden wordt
   public void simpleMaze () {  
       while (!onNest()) {
           turnRight();
@@ -284,6 +305,7 @@ public class MyDodo extends Dodo
       }
       showCompliment("Nest gevonden!");
 }
+// Volgt een spoor van eieren totdat een nest bereikt wordt
 public void eggTrailToNest() {
       while (!onNest()) {
           if (eggAhead() || nestAhead()) {
@@ -296,6 +318,7 @@ public void eggTrailToNest() {
           }
       }
   }
+  // Draait Dodo naar de opgegeven richting, mits die geldig is (0 t/m 3)
    public void faceDirection(int direction) {
         if (direction >= 0 && direction <= 3)
         {
@@ -304,12 +327,14 @@ public void eggTrailToNest() {
         }
     }
 }
+// Laat Dodo n stappen vooruit lopen en legt op elke nieuwe cel een ei
   public void layTrailOfEggs(int n){
     for (int i = 0; i < n; i++){
         move();
         layEgg();
     }
     }
+    // Telt het totale aantal eieren in de hele wereld door elke cel te bezoeken
    public int countEggsInWorld() {
     int total = 0;
     int height = getWorld().getHeight();
@@ -327,6 +352,7 @@ public void eggTrailToNest() {
     System.out.println("Totaal aantal eieren: " + total);
     return total;
 }
+// Zoekt de rij met het meeste aantal eieren en print het resultaat (of een melding bij gelijkspel)
  public void searchRowWithMostEggs() {
     int height = getWorld().getHeight();
     int row = 0;
@@ -355,6 +381,7 @@ public void eggTrailToNest() {
         System.out.println("Row with most eggs: " + bestRow + " (" + bestCount + ")");
     }
 }
+// Legt een driehoekig monument van eieren: rij 0 krijgt 1 ei, rij 1 krijgt 2, enzovoort
 public void maakMonumentVanEieren() {
     int startX = getX();
     int startY = getY();
@@ -397,6 +424,7 @@ public void maakStevigMonument() {
 
     goToLocation(startX, startY);
 }
+// Legt een piramidevorm van eieren, gecentreerd rond de startkolom van Dodo
   public void maakPiramideVanEieren() {
     int startX = getX();
     int startY = getY();
@@ -413,6 +441,7 @@ public void maakStevigMonument() {
 
     goToLocation(startX, startY);
  }
+ // Berekent en print het gemiddeld aantal eieren per rij in de hele wereld
  public double gemiddeldAantalEierenPerRij() {
     int aantalRijen = getWorld().getHeight();
     int totaalEieren = 0;
@@ -430,6 +459,7 @@ public void maakStevigMonument() {
     face(EAST);
     return gemiddelde;
 }
+// Zoekt een rij en kolom met een oneven aantal eieren en legt op hun kruispunt een extra ei
   public void parityTester() {
         int worldHeight = getWorld().getHeight();
         int worldWidth = getWorld().getWidth();
@@ -460,7 +490,7 @@ public void maakStevigMonument() {
             }
         }
     }
-    
+    // Bepaalt de huidige kijkrichting van Dodo als getal (0=noord, 1=oost, 2=zuid, 3=west)
     public int direction() {
         int previousX = getX();
         int previousY = getY();
@@ -495,7 +525,7 @@ public void maakStevigMonument() {
         }
         return direction;
     }
-    
+    // Zelfde als parityTester(), maar gebruikt faceDirection() in plaats van faceEast()/faceSouth()
     public void parityTesterWithoutDirection() {
         int worldHeight = getWorld().getHeight();
         int worldWidth = getWorld().getWidth();
@@ -526,6 +556,21 @@ public void maakStevigMonument() {
             }
         }
     }
+    //maak een 10 suprise eggs aan in de wereld, dus krijgt de grootte van de wereld mee
+    public List <SupriseEgg> makeListOfSupriseEgg(){
+      return SupriseEgg.generateListOfSupriseEggs(10, getWorld());
+    }
+    //print de coordinaten van de ei op de X en Y as.
+    public void printCoordinateOfEgg(){
+        System.out.println(egg.getX() + "X" + egg.getY() + "Y");
+    }
+    // combineert de 2 functies bij elkaar
+    public void makeListOfSupriseEggAndPrintCoordinates(){
+    for(Egg egg : makeListOfSupriseEggs()){
+        prinrCoordinatesofEgg(egg);
+    }
+    }
+    
 }
 
  
