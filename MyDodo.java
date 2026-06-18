@@ -575,11 +575,21 @@ public void maakStevigMonument() {
     List<SurpriseEgg> eggValue = makeListOfSurpriseEgg();
     int mostValuedEgg = 0;
     for(Egg egg: eggValue){
-        if(mostValuedEgg > egg.getValue()){
+        if(mostValuedEgg < egg.getValue()){
             mostValuedEgg = egg.getValue();
     }
   }
-   System.out.println(mostValuedEgg + "meest waardevolle ei");
+   System.out.println(mostValuedEgg + " meest waardevolle ei ");
+ } 
+ // deze functie zoek voor de gemiddelde ei tussen de grootte van de aantal eieren
+ public void searchForAverageEgg(){
+    List<SurpriseEgg> eggValue = makeListOfSurpriseEgg();
+    int total = 0;
+    for(Egg egg: eggValue){
+        total += egg.getValue();
+  }
+   double averageValueEgg = (double)total / eggValue.size();
+   System.out.println(averageValueEgg + " de gemiddelde ei ");
  } 
 }
     
