@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.list;
+import java.util.List;
 /**
  *
  * @author Sjaak Smetsers & Renske Smetsers-Weeda
@@ -557,21 +557,33 @@ public void maakStevigMonument() {
         }
     }
     //maak een 10 suprise eggs aan in de wereld, dus krijgt de grootte van de wereld mee
-    public List <SupriseEgg> makeListOfSupriseEgg(){
-      return SupriseEgg.generateListOfSupriseEggs(10, getWorld());
+    public List <SurpriseEgg> makeListOfSurpriseEgg(){
+      return SurpriseEgg.generateListOfSurpriseEggs(10, getWorld());
     }
     //print de coordinaten van de ei op de X en Y as.
-    public void printCoordinateOfEgg(){
-        System.out.println(egg.getX() + "X" + egg.getY() + "Y");
+    public void printCoordinatesOfEgg(Egg egg){
+        System.out.println(getX() + "X" + getY() + "Y");
     }
     // combineert de 2 functies bij elkaar
-    public void makeListOfSupriseEggAndPrintCoordinates(){
-    for(Egg egg : makeListOfSupriseEggs()){
-        prinrCoordinatesofEgg(egg);
+    public void makeListOfSupriseEggAndPrintCoordinatesOfEgg(){
+    for(Egg egg : makeListOfSurpriseEgg()){
+        printCoordinatesOfEgg(egg);
     }
     }
-    
+    // hij zoekt voor de meest waardevolle ei en kijkt tussen 10 eieren
+    public void searchForMostValuedEgg(){
+    List<SurpriseEgg> eggValue = makeListOfSurpriseEgg();
+    int mostValuedEgg = 0;
+    for(Egg egg: eggValue){
+        if(mostValuedEgg > egg.getValue()){
+            mostValuedEgg = egg.getValue();
+    }
+  }
+   System.out.println(mostValuedEgg + "meest waardevolle ei");
+ } 
 }
+    
+
 
  
 
