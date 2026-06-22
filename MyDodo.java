@@ -591,7 +591,36 @@ public void maakStevigMonument() {
    double averageValueEgg = (double)total / eggValue.size();
    System.out.println(averageValueEgg + " de gemiddelde ei ");
  } 
+ /**
+ * Laat het object willekeurig bewegen totdat het maximale aantal stappen is bereikt.
+ * Bij elke stap wordt een willekeurige richting gekozen.
+ * Als bewegen niet mogelijk is of er een rand voor het object ligt,
+ * draait het object 180 graden om en probeert vervolgens te bewegen.
+ * Na elke stap wordt de score bijgewerkt.
+ */
+ public void moveRandom() {
+        int myNrOfStepsTaken = 0;
+        while(myNrOfStepsTaken < Mauritius.MAXSTEPS) {
+            faceDirection(randomDirection());
+            if(!canMove() || borderAhead()) {
+                turn180();
+            }
+            move();
+            myNrOfStepsTaken++;
+            getScore(Mauritius.MAXSTEPS - myNrOfStepsTaken,0);
+        }
+    } 
+    /**
+ * Werkt de score in de wereld bij.
+ *
+ * @param score1 De score voor speler/object 1.
+ * @param score2 De score voor speler/object 2.
+ */
+    public void getScore(int score1, int score2) {
+        ((Mauritius)getWorld()).updateScore(score1,score2);
+    }
 }
+
     
 
 
