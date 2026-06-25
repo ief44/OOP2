@@ -7,6 +7,17 @@ import java.util.List;
  */
 public class MyDodo extends Dodo
 {
+private int stepsTaken = Mauritius.MAXSTEPS;
+private int myNrOfEggs = 0;
+    public void eggValueSwap() {
+        int temporaryValueEgg;
+        BlueEgg valueBlueEgg = new BlueEgg();
+        GoldenEgg valueGoldenEgg = new GoldenEgg();
+
+        temporaryValueEgg = valueBlueEgg.getValue();
+        valueBlueEgg.setValue(valueGoldenEgg.getValue());
+        valueGoldenEgg.setValue(temporaryValueEgg);
+    }
     private int myNrOfEggsHatched;
     
     public MyDodo() {
@@ -382,7 +393,7 @@ public void eggTrailToNest() {
     }
 }
 // Legt een driehoekig monument van eieren: rij 0 krijgt 1 ei, rij 1 krijgt 2, enzovoort
-public void maakMonumentVanEieren() {
+public void makeMonumentOfEggs() {
     int startX = getX();
     int startY = getY();
     int aantalRijen = getWorld().getHeight() - startY;
@@ -406,7 +417,7 @@ public void maakMonumentVanEieren() {
  * <p> Final:   De wereld is gevuld met een verdubbelend patroon van eieren
  *              vanaf de startpositie van Dodo.
  */
-public void maakStevigMonument() {
+public void makeSolidMonumnet() {
     int startX = getX();
     int startY = getY();
     int aantalRijen = getWorld().getHeight() - startY;
@@ -425,7 +436,7 @@ public void maakStevigMonument() {
     goToLocation(startX, startY);
 }
 // Legt een piramidevorm van eieren, gecentreerd rond de startkolom van Dodo
-  public void maakPiramideVanEieren() {
+  public void makePiramideOfEggs() {
     int startX = getX();
     int startY = getY();
     int aantalRijen = getWorld().getHeight() - startY;
@@ -442,7 +453,7 @@ public void maakStevigMonument() {
     goToLocation(startX, startY);
  }
  // Berekent en print het gemiddeld aantal eieren per rij in de hele wereld
- public double gemiddeldAantalEierenPerRij() {
+ public double averageEggsPerRow() {
     int aantalRijen = getWorld().getHeight();
     int totaalEieren = 0;
 
@@ -560,6 +571,9 @@ public void maakStevigMonument() {
     public List <SurpriseEgg> makeListOfSurpriseEgg(){
       return SurpriseEgg.generateListOfSurpriseEggs(10, getWorld());
     }
+     public List<Egg> getListOfEggsInWorld() {
+        return getWorld().getObjects(Egg.class);
+    }
     //print de coordinaten van de ei op de X en Y as.
     public void printCoordinatesOfEgg(Egg egg){
         System.out.println(getX() + "X" + getY() + "Y");
@@ -619,7 +633,48 @@ public void maakStevigMonument() {
     public void getScore(int score1, int score2) {
         ((Mauritius)getWorld()).updateScore(score1,score2);
     }
+    //dodo pakt de ei die het dichtbijzijnde van de dodo af staat
+ public void pickUpNearestEggInList() {
+        List<Egg> eggs = getListOfEggsInWorld();
+        int closestEgg = 10000;
+        Egg eggLocation = null;
+        for(Egg egg: eggs) {
+            int x = getX() - egg.getX();
+            int y = getY() - egg.getY();
+            if(x < 0){
+                x = -x;
+            }
+            if(y < 0){
+                y = -y;
+            }
+            int stappen = x + y;
+            if(stappen < closestEgg) {
+                closestEgg = stappen;
+                eggLocation = egg;
+            }
+        }
+        if(eggLocation != null) {
+            goToLocation(eggLocation.getX(), eggLocation.getY());
+            myNrOfEggs += eggLocation.getValue();
+        } else {
+            showError("Er zijn geen eieren!");
+        }
+    }
+
+    // dodo gaat naar de dichtbijzijnde eieren binnen 40 stappen
+    public void dodoRace() {
+        List<Egg> eggs = getListOfEggsInWorld();
+        
+        for(Egg egg : eggs) {
+            pickUpNearestEggInList();
+            if(onEgg()){
+                hatchEgg();
+            }
+            getScore(stepsTaken, myNrOfEggs);
+        }
+    }
 }
+
 
     
 
